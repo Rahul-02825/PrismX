@@ -36,6 +36,28 @@ func (chash * ConsistentHash) insertServer(server string){
 	})
 }
 
+// removeServer removes a server from the hash ring.
+func (chash *ConsistentHash) removeServer(server string) {
+	if chash.hash_ring == nil {
+		return
+	}
+
+	server_key := chash.getEncode(server)
+
+	// Remove from hash and ring as well
+	delete(chash.hash_ring, server_key)
+
+	// search in log time
+	idx := sort.Search(len(chash.sorted_ring), func(i int) bool {
+		return chash.sorted_ring[i] >= server_key
+	})
+
+	if idx < len(chash.sorted_ring) && chash.sorted_ring[idx] == server_key {
+		chash.sorted_ring = append(chash.sorted_ring[:idx], chash.sorted_ring[idx+1:]...)
+	}
+}
+
+
 func (chash * ConsistentHash) getServer(request string) string{
 	request_key := chash.getEncode(request)
 	
