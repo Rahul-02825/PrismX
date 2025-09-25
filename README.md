@@ -1,18 +1,7 @@
 # PrismX
 
 A **reverse proxy server** written in [Go](https://go.dev/).  
-This project is currently in its **early development phase** — the goal is to build a lightweight reverse proxy with features like consistent hashing, load balancing, and pluggable middlewares.
-
----
-
-## ✨ Features (Work in Progress)
-- ✅ Basic **consistent hashing** implementation  
-- ✅ Server ring management (add/remove servers dynamically)  
-- 🚧 Request routing  
-- 🚧 Reverse proxy handler  
-- 🚧 Virtual nodes for smoother load distribution  
-- 🚧 Configurable middlewares (logging, rate-limiting, etc.)  
-
+This project is currently in its **early development phase** — the goal is to build a lightweight reverse proxy with pluggable middlewares.
 ---
 
 ## 🛠 Getting Started
