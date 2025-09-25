@@ -1,6 +1,6 @@
 # PrismX
 
-A **reverse proxy server** written in [Go](https://go.dev/), designed for scalability, reliability, and extensibility.  
+A **reverse proxy server** written in [Go](https://go.dev/).  
 This project is currently in its **early development phase** — the goal is to build a lightweight reverse proxy with features like consistent hashing, load balancing, and pluggable middlewares.
 
 ---
