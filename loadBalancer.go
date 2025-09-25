@@ -41,19 +41,27 @@ func (chash *ConsistentHash) removeServer(server string) {
 	if chash.hash_ring == nil {
 		return
 	}
-
+	
+	// get the server key
 	server_key := chash.getEncode(server)
 
-	// Remove from hash and ring as well
-	delete(chash.hash_ring, server_key)
+	// check for server existence
+	_,ok := chash.hash_ring[server_key]
 
-	// search in log time
-	idx := sort.Search(len(chash.sorted_ring), func(i int) bool {
-		return chash.sorted_ring[i] >= server_key
-	})
+	if ok{
+		// Remove from hash and ring as well
+		delete(chash.hash_ring, server_key)
 
-	if idx < len(chash.sorted_ring) && chash.sorted_ring[idx] == server_key {
-		chash.sorted_ring = append(chash.sorted_ring[:idx], chash.sorted_ring[idx+1:]...)
+		// search in log time
+		idx := sort.Search(len(chash.sorted_ring), func(i int) bool {
+			return chash.sorted_ring[i] >= server_key
+		})
+
+		if idx < len(chash.sorted_ring) && chash.sorted_ring[idx] == server_key {
+			chash.sorted_ring = append(chash.sorted_ring[:idx], chash.sorted_ring[idx+1:]...)
+		}
+	}else{
+		fmt.Printf("No such servers exist")
 	}
 }
 
