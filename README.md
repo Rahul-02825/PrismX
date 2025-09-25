@@ -13,5 +13,5 @@ This project is currently in its **early development phase** — the goal is to 
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/reverse-proxy-go.git
+git clone https://github.com/Rahul-02825/PrismX.git
 cd reverse-proxy-go
