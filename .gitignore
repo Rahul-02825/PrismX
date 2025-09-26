@@ -18,5 +18,5 @@ logs/
 .idea/
 *.DS_Store
 
-# Go modules (optional: usually you keep go.mod/go.sum)
+# Go modules
 /vendor/
