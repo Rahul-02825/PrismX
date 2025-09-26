@@ -1,0 +1,22 @@
+# Go build outputs
+/bin/
+/obj/
+/*.exe
+/*.out
+/*.test
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# IDE/editor files
+*.swp
+*.vscode/
+.idea/
+*.DS_Store
+
+# Go modules (optional: usually you keep go.mod/go.sum)
+/vendor/

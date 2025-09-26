@@ -1,15 +1,16 @@
-package main
+package loadBalancer
 
 import(
 	"fmt"
 	"crypto/sha256"
 	"sort"
 	"encoding/binary"
+	"PrismX/logger"
 )
 
 // consistent hashing Methodology
 // For now no replicas is added to the ring
-
+var log = logger.InitLogger("app.log")
 type ConsistentHash struct{
 	sorted_ring []uint64
 	hash_ring map[uint64]string
@@ -60,8 +61,11 @@ func (chash *ConsistentHash) removeServer(server string) {
 		if idx < len(chash.sorted_ring) && chash.sorted_ring[idx] == server_key {
 			chash.sorted_ring = append(chash.sorted_ring[:idx], chash.sorted_ring[idx+1:]...)
 		}
+		removeMsg := fmt.Sprintf("%s got removed",server)
+		log.Warn(removeMsg)
 	}else{
-		fmt.Printf("No such servers exist")
+
+		log.Error("No such server exist\n")
 	}
 }
 
@@ -84,7 +88,9 @@ func (chash * ConsistentHash) getServer(request string) string{
 	}
 }	
 
-func main(){
+func StartLoadbalancer(){
+	// log := logger.InitLogger("app.log")
+	log.Info("Loadbalancing started")
 
 	consistentHash := ConsistentHash{}
 	servers := []string{"server1","server2","server3"}
@@ -96,7 +102,8 @@ func main(){
 	s2:=consistentHash.getServer("request2")
 	s3:=consistentHash.getServer("request5")
 
+	
 	fmt.Printf("%s,%s,%s\n",s1,s2,s3)
-
-	fmt.Printf("Done\n")
+	consistentHash.removeServer("server3")
+	log.Info("Load balancing done")
 }
