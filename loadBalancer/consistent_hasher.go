@@ -6,6 +6,7 @@ import(
 	"sort"
 	"encoding/binary"
 	"PrismX/logger"
+	"PrismX/config"
 )
 
 // consistent hashing Methodology
@@ -88,16 +89,31 @@ func (chash * ConsistentHash) getServer(request string) string{
 	}
 }	
 
+// func get_consistentHash() (*ConsistentHash,error){
+// 	return &ConsistentHash{},nil
+// }
+
 func StartLoadbalancer(){
+
+	consistentHash := ConsistentHash{}
 	// log := logger.InitLogger("app.log")
 	log.Info("Loadbalancing started")
 
-	consistentHash := ConsistentHash{}
-	servers := []string{"server1","server2","server3"}
-	
+	// loading the config instance
+	configInstance,configError := config.LoadConfig()
+
+	if configError != nil{
+		log.Error("Error occured on config")
+	}
+
+	// load the servers from the conifg
+	servers := configInstance.GetServers()
+
+
 	for _,value := range servers{
 		consistentHash.insertServer(value)	
 	}
+
 	s1:=consistentHash.getServer("request1")
 	s2:=consistentHash.getServer("request2")
 	s3:=consistentHash.getServer("request5")
