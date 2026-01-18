@@ -13,7 +13,7 @@ func main() {
 
 	log.Info("Application started")
 	
-	go loadBalancer.StartLoadbalancer()
+	go loadBalancer.StartLoadBalancer()
 
 	for i := 0; i < 5; i++ {
 		log.Info("Main thread working...")

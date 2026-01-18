@@ -1,11 +1,11 @@
 package config
 
+// configs has to be added later via db
 type config struct {
 	servers []string
 	balancer string
 	replicas int
 }
-
 
 func LoadConfig() (*config, error) {
 	return &config{

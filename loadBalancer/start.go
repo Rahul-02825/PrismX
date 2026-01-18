@@ -1,0 +1,47 @@
+package loadBalancer
+
+import (
+	"fmt"
+	"PrismX/config"
+	"PrismX/logger"
+)
+
+var log = logger.InitLogger("app.log")
+
+func StartLoadBalancer() {
+	log.Info("Starting load balancer")
+
+	// Factory decides which algorithm to use
+	lb:= balancerFactory("consistent-hash")
+	// if err != nil {
+	// 	log.Error(err.Error())
+	// 	return
+	// }
+
+	// Load servers from config
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Error("failed to load config")
+		return
+	}
+
+	servers := cfg.GetServers()
+	for _, server := range servers {
+		lb.insertServer(server)
+	}
+
+	// Example requests 
+	reqs := []string{"request1", "request2", "request3"}
+
+	for _, r := range reqs {
+		server := lb.getServer(r)
+		fmt.Printf("Request %s → %s\n", r, server)
+	}
+
+	// Dynamic removal example
+	lb.removeServer("server2")
+	log.Warn("server2 removed")
+
+	fmt.Println("After removal:")
+	fmt.Println(lb.getServer("request1"))
+}

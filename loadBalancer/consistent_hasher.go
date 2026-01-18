@@ -5,14 +5,14 @@ import(
 	"crypto/sha256"
 	"sort"
 	"encoding/binary"
-	"PrismX/logger"
-	"PrismX/config"
+	
 )
 
 // consistent hashing Methodology
 // For now no replicas is added to the ring
-var log = logger.InitLogger("app.log")
+// var log = logger.InitLogger("app.log")
 type ConsistentHash struct{
+	uniqueName string
 	sorted_ring []uint64
 	hash_ring map[uint64]string
 }
@@ -89,37 +89,9 @@ func (chash * ConsistentHash) getServer(request string) string{
 	}
 }	
 
-// func get_consistentHash() (*ConsistentHash,error){
-// 	return &ConsistentHash{},nil
-// }
-
-func StartLoadbalancer(){
-
-	consistentHash := ConsistentHash{}
-	// log := logger.InitLogger("app.log")
-	log.Info("Loadbalancing started")
-
-	// loading the config instance
-	configInstance,configError := config.LoadConfig()
-
-	if configError != nil{
-		log.Error("Error occured on config")
-	}
-
-	// load the servers from the conifg
-	servers := configInstance.GetServers()
+// creation shoud not be here since in factory method will deal with the creation
 
 
-	for _,value := range servers{
-		consistentHash.insertServer(value)	
-	}
 
-	s1:=consistentHash.getServer("request1")
-	s2:=consistentHash.getServer("request2")
-	s3:=consistentHash.getServer("request5")
 
-	
-	fmt.Printf("%s,%s,%s\n",s1,s2,s3)
-	consistentHash.removeServer("server3")
-	log.Info("Load balancing done")
-}
+
