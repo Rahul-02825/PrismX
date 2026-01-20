@@ -22,7 +22,7 @@ func ConnectDatabase() {
 		log.Fatal("Error loading .env file")
 	}
 	if uri = os.Getenv("MONGO_URL"); uri == "" {
-		log.Fatal("You must set your 'MONGODB_URI' environment variable. See\n\t https://docs.mongodb.com/drivers/go/current/usage-examples/")
+		log.Fatal("Incorrect Mongodb url or unknown url")
 	}
 
 	// Uses the SetServerAPIOptions() method to set the Stable API version to 1
