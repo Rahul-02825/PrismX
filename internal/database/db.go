@@ -13,7 +13,11 @@ import (
 )
 
 
-var Client *mongo.Client
+var (
+	Client *mongo.Client
+	UserCollection *mongo.Collection
+	ConfigCollection *mongo.Collection
+)
 
 func ConnectDatabase() {
 	log := logger.InitLogger("app.log")
@@ -44,8 +48,14 @@ func ConnectDatabase() {
 			panic(err)
 		}
 	}()
-	log.Info("successfully connected to Database")
+	log.Info("Successfully connected to Database")
 	Client = client
+
+	db := client.Database("PrismX")
+	UserCollection := db.Collection("User")
+	ConfigCollection := db.Collection("Config")
+
+	
 	// fmt.Println("connection to databse is going on")
 	// // Sends a ping to confirm a successful connection
 	// var result bson.M
