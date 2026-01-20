@@ -4,6 +4,7 @@ package proxy
 var log := logger.InitLogger("app.log")
 
 
-func create_proxy(balancer loadBalancer.balancer){
-	
+func create_proxy(lb loadBalancer.loadbalancer){
+
+		
 }

@@ -5,7 +5,6 @@ import(
 	"crypto/sha256"
 	"sort"
 	"encoding/binary"
-	
 )
 
 // consistent hashing Methodology
