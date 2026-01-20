@@ -3,26 +3,28 @@ package database
 
 import (
 	"context"
-	"fmt"
-	"log"
 	"os"
-
+	"PrismX/logger"
 	// "go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"github.com/joho/godotenv"	
 
 )
+
+
 var Client *mongo.Client
 
 func ConnectDatabase() {
+	log := logger.InitLogger("app.log")
+
 	var uri string
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Error("Error loading .env file")
 	}
 	if uri = os.Getenv("MONGO_URL"); uri == "" {
-		log.Fatal("Incorrect Mongodb url or unknown url")
+		log.Error("Incorrect Mongodb url or unknown url")
 	}
 
 	// Uses the SetServerAPIOptions() method to set the Stable API version to 1
@@ -42,7 +44,7 @@ func ConnectDatabase() {
 			panic(err)
 		}
 	}()
-	fmt.Println("successfully connected to MongoDB!")
+	log.Info("successfully connected to Database")
 	Client = client
 	// fmt.Println("connection to databse is going on")
 	// // Sends a ping to confirm a successful connection

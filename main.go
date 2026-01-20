@@ -18,11 +18,14 @@ func main() {
 	
 	defer log.Close()
 
-	log.Info("database connection")
 
-	database.ConnectDatabase()
 
 	log.Info("Application started")
+
+	log.Info("Running database connection")
+	database.ConnectDatabase()
+
+
 	
 	go loadBalancer.StartLoadBalancer()
 
