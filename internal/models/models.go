@@ -55,10 +55,7 @@ type Location struct {
 
 type GlobalConfig struct {
 	ID        string          `bson:"_id,omitempty" json:"id"`
-	WorkerProcesses     string `bson:"worker_processes" json:"worker_processes"`
-	WorkerConnections   int    `bson:"worker_connections" json:"worker_connections"`
 	KeepaliveTimeout    string `bson:"keepalive_timeout" json:"keepalive_timeout"`
-	Gzip                bool   `bson:"gzip" json:"gzip"`
 	ClientMaxBodySize   string `bson:"client_max_body_size" json:"client_max_body_size"`
 	AccessLog           string `bson:"access_log" json:"access_log"`
 	ErrorLog            string `bson:"error_log" json:"error_log"`
