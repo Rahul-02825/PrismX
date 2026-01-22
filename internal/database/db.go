@@ -1,71 +1,53 @@
 package database
 
-
 import (
 	"context"
 	"os"
 	"PrismX/logger"
-	// "go.mongodb.org/mongo-driver/v2/bson"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
-	"github.com/joho/godotenv"	
-
 )
 
-
 var (
-	Client *mongo.Client
-	UserCollection *mongo.Collection
+	client           *mongo.Client
+	UserCollection   *mongo.Collection
 	ConfigCollection *mongo.Collection
 )
 
+// var log = logger.InitLogger("app.log")
+
 func ConnectDatabase() {
-	log := logger.InitLogger("app.log")
 
-	var uri string
-	err := godotenv.Load()
-	if err != nil {
-		log.Error("Error loading .env file")
-	}
-	if uri = os.Getenv("MONGO_URL"); uri == "" {
-		log.Error("Incorrect Mongodb url or unknown url")
+	// Load env
+	if err := godotenv.Load(); err != nil {
+		logger.Instance.Error("Error loading .env file")
 	}
 
-	// Uses the SetServerAPIOptions() method to set the Stable API version to 1
+	uri := os.Getenv("MONGO_URL")
+	if uri == "" {
+		logger.Instance.Warn("MONGO_URL not set")
+	}
+
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-
-	// Defines the options for the MongoDB client
 	opts := options.Client().ApplyURI(uri).SetServerAPIOptions(serverAPI)
 
-	// Creates a new client and connects to the server
-	client, err := mongo.Connect(opts)
-
+	var err error
+	client, err = mongo.Connect(opts)
 	if err != nil {
-		panic(err)
+		logger.Instance.Error("Mongo connect failed: ")
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
-	log.Info("Successfully connected to Database")
-	Client = client
+
+	// Verify connection
+	if err = client.Ping(context.Background(), nil); err != nil {
+		logger.Instance.Error("Mongo ping failed: ")
+	}
 
 	db := client.Database("PrismX")
-	UserCollection := db.Collection("User")
-	ConfigCollection := db.Collection("Config")
+	UserCollection = db.Collection("User")
+	ConfigCollection = db.Collection("Config")
 
-	
-	// fmt.Println("connection to databse is going on")
-	// // Sends a ping to confirm a successful connection
-	// var result bson.M
-	// if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Decode(&result); err != nil {
-	// 	fmt.Println("some error occured")
-	// 	panic(err)
-	// }
-	
+	logger.Instance.Info("Successfully connected to MongoDB")
 }
 
-func GetDatabaseClient() *mongo.Client{
-	return Client
-}
+

@@ -5,11 +5,11 @@ import(
 	"crypto/sha256"
 	"sort"
 	"encoding/binary"
+	"PrismX/logger"
+
 )
 
-// consistent hashing Methodology
-// For now no replicas is added to the ring
-// var log = logger.InitLogger("app.log")
+
 type ConsistentHash struct{
 	uniqueName string
 	sorted_ring []uint64
@@ -62,10 +62,10 @@ func (chash *ConsistentHash) removeServer(server string) {
 			chash.sorted_ring = append(chash.sorted_ring[:idx], chash.sorted_ring[idx+1:]...)
 		}
 		removeMsg := fmt.Sprintf("%s got removed",server)
-		log.Warn(removeMsg)
+		logger.Instance.Warn(removeMsg)
 	}else{
 
-		log.Error("No such server exist\n")
+		logger.Instance.Error("No such server exist\n")
 	}
 }
 

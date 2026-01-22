@@ -7,7 +7,6 @@ type User struct {
 	Password string             `bson:"password" json:"-"`
 }
 
-
 type Config struct {
 	ID        string          `bson:"_id,omitempty" json:"id"`
 	Upstreams map[string]Upstream `bson:"upstreams" json:"upstreams"`
@@ -16,7 +15,7 @@ type Config struct {
 }
 
 type Upstream struct {
-	ID        string          `bson:"_id,omitempty" json:"id"`
+	ID         string           `bson:"_id,omitempty" json:"id"`
 	Name       string           `bson:"name" json:"name"`
 	LBMethod   string           `bson:"lb_method" json:"lb_method"`
 	Servers    []UpstreamServer `bson:"servers" json:"servers"`
@@ -24,7 +23,7 @@ type Upstream struct {
 }
 
 type UpstreamServer struct {
-	ID        string          `bson:"_id,omitempty" json:"id"`
+	ID          string  `bson:"_id,omitempty" json:"id"`
 	Address     string `bson:"address" json:"address"`
 	Weight      int    `bson:"weight,omitempty" json:"weight,omitempty"`
 	MaxFails    int    `bson:"max_fails,omitempty" json:"max_fails,omitempty"`

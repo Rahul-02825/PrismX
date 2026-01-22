@@ -13,7 +13,7 @@ type Logger struct {
 }
 
 var (
-	instance *Logger
+	Instance *Logger
 	once     sync.Once
 )
 
@@ -30,9 +30,9 @@ func InitLogger(filename string) *Logger {
 		if err != nil {
 			panic(err)
 		}
-		instance = &Logger{file: f}
+		Instance = &Logger{file: f}
 	})
-	return instance
+	return Instance
 }
 
 // log writes a log entry with timestamp and level

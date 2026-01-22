@@ -1,7 +1,6 @@
 package loadBalancer
 
 
-// var log = logger.InitLogger("app.log")
 
 // factory design pattern implementation for the balancers
 type loadbalancer interface{

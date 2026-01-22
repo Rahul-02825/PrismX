@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"PrismX/config"
 	"PrismX/logger"
+
 )
 
-var log = logger.InitLogger("app.log")
-
 func StartLoadBalancer() {
-	log.Info("Starting load balancer")
+	logger.Instance.Info("Starting load balancer")
 
 	// Factory decides which algorithm to use
 	lb:= balancerFactory("consistent-hash")
@@ -21,7 +20,7 @@ func StartLoadBalancer() {
 	// Load servers from config
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		log.Error("failed to load config")
+		logger.Instance.Error("failed to load config")
 		return
 	}
 
@@ -40,7 +39,7 @@ func StartLoadBalancer() {
 
 	// Dynamic removal example
 	lb.removeServer("server2")
-	log.Warn("server2 removed")
+	logger.Instance.Warn("server2 removed")
 
 	fmt.Println("After removal:")
 	fmt.Println(lb.getServer("request1"))
