@@ -1,5 +1,7 @@
 package config
 
+
+// attributes are private to struct
 // configs has to be added later via db
 type upstream struct {
 	name     string
@@ -49,7 +51,7 @@ func LoadConfig() (*config, error) {
 	}, nil
 }
 
-
+// methods are public to export 
 func (c *config) GetServers() upstream {
 	return c.upstream
 }
