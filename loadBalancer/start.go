@@ -11,9 +11,9 @@ func StartLoadBalancer() {
 	logger.Instance.Info("Starting load balancer")
 
 	// Factory decides which algorithm to use
-	lb:= balancerFactory("consistent-hash")
+	lb,err:= balancerFactory("consistent-hash")
 	// if err != nil {
-	// 	log.Error(err.Error())
+	// 	log.Instance.Error(err.Error())
 	// 	return
 	// }
 

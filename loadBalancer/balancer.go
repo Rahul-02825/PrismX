@@ -9,14 +9,14 @@ type loadbalancer interface{
 	getServer(request string) string
 }
 // for now consistent hashing is only available balancer
-func balancerFactory(balancerType string) (loadbalancer){
+func balancerFactory(balancerType string) (loadbalancer,error){
 
 	switch balancerType{
 	case "consistent-hash":
-			return &ConsistentHash{}
+			return &ConsistentHash{},nil
 		
 	default:
-		return nil
+		return nil,nil
 	}	
 	
 }
