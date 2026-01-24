@@ -17,7 +17,7 @@ type config struct {
 	server []server
 }
 type upstreamservers struct{
-	address string
+	Address string
 	weight int
 	maxFails int
 	FailTimeout int
@@ -28,7 +28,7 @@ type server struct{
 	serverName string
 }
 
-
+// Dummy configuration for now
 func LoadConfig() (*config, error) {
 	return &config{
 		upstream: upstream{
@@ -37,7 +37,14 @@ func LoadConfig() (*config, error) {
 				replicas: 3,
 				servers:  []upstreamservers{
 					{
-						address:"http://localhost:9000/auth",
+						Address:"http://localhost:9000/auth",
+						weight:10,
+						maxFails: 2,
+						FailTimeout: 2,
+						down:false,
+					},
+					{
+						Address:"http://localhost:9001/order",
 						weight:10,
 						maxFails: 2,
 						FailTimeout: 2,
@@ -52,6 +59,6 @@ func LoadConfig() (*config, error) {
 }
 
 // methods are public to export 
-func (c *config) GetServers() upstream {
-	return c.upstream
+func (c *config) GetServers() []upstreamservers {
+	return c.upstream.servers
 }

@@ -26,7 +26,8 @@ func StartLoadBalancer() {
 
 	servers := cfg.GetServers()
 	for _, server := range servers {
-		lb.insertServer(server)
+		fmt.Println(server.Address)
+		lb.insertServer(server.Address)
 	}
 
 	// Example requests 
