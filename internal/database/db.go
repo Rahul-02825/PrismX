@@ -21,7 +21,7 @@ func ConnectDatabase() {
 
 	// Load env
 	if err := godotenv.Load(); err != nil {
-		logger.Instance.Error("Error loading .env file")
+		logger.Instance.Error("Error loading .env file "+ err.Error())
 	}
 
 	uri := os.Getenv("MONGO_URL")
@@ -35,12 +35,12 @@ func ConnectDatabase() {
 	var err error
 	client, err = mongo.Connect(opts)
 	if err != nil {
-		logger.Instance.Error("Mongo connect failed: ")
+		logger.Instance.Error("Mongo connect failed: "+ err.Error())
 	}
 
 	// Verify connection
 	if err = client.Ping(context.Background(), nil); err != nil {
-		logger.Instance.Error("Mongo ping failed: ")
+		logger.Instance.Error("Mongo ping failed: "+ err.Error())
 	}
 
 	db := client.Database("PrismX")

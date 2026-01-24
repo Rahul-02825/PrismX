@@ -1,8 +1,7 @@
 package controller
 
 import (
-	// "io"
-	// "log"
+	
 	"net/http"
 	"PrismX/internal/models"
 	"PrismX/internal/database"
@@ -12,13 +11,12 @@ import (
 ) 
 
 func CreateUser(res http.ResponseWriter,req *http.Request){
-
+	
 	// Make sure it is a POST request
 	if req.Method != http.MethodPost {
 		http.Error(res, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
 
 	res.Header().Set("Content-Type", "application/json")
 
@@ -40,3 +38,4 @@ func CreateUser(res http.ResponseWriter,req *http.Request){
 	json.NewEncoder(res).Encode(result)
 
 }
+
