@@ -65,7 +65,7 @@ func (chash *ConsistentHash) removeServer(server string) {
 		logger.Instance.Warn(removeMsg)
 	}else{
 
-		log.Error("No such server exist\n")
+		logger.Instance.Error("No such server exist\n")
 	}
 }
 
