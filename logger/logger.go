@@ -13,15 +13,15 @@ type Logger struct {
 }
 
 var (
-	instance *Logger
+	Instance *Logger
 	once     sync.Once
 )
 
 // InitLogger initializes the logger (singleton)
 func InitLogger(filename string) *Logger {
-	logpath := "/home/rahul/Documents/project/PrismX/logs/app.log"
+	logpath := "/home/rahul/Documents/projects/PrismX/logs/app.log"
 	// Ensure parent directory exists
-	err := os.MkdirAll("/home/rahul/Documents/project/PrismX/logs", os.ModePerm)
+	err := os.MkdirAll("/home/rahul/Documents/projects/PrismX/logs", os.ModePerm)
 	if err != nil {
 		panic(err)
 	}
@@ -30,9 +30,9 @@ func InitLogger(filename string) *Logger {
 		if err != nil {
 			panic(err)
 		}
-		instance = &Logger{file: f}
+		Instance = &Logger{file: f}
 	})
-	return instance
+	return Instance
 }
 
 // log writes a log entry with timestamp and level
